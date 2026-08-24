@@ -20,3 +20,20 @@ test('rejects invalid quantities', () => {
     /positive integer/
   )
 })
+
+test('rejects sparse order arrays', () => {
+  assert.throws(
+    () => countOrderUnits(Array(1)),
+    /must be present/
+  )
+})
+
+test('rejects totals outside the safe integer range', () => {
+  assert.throws(
+    () => countOrderUnits([
+      { quantity: Number.MAX_SAFE_INTEGER },
+      { quantity: 2 }
+    ]),
+    /safe integer range/
+  )
+})
