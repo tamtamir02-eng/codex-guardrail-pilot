@@ -139,3 +139,29 @@ test('rejects inherited quantities after prototype pollution', () => {
     delete Object.prototype.quantity
   }
 })
+
+test('rejects proxied arrays that lie about their length', () => {
+  const items = new Proxy([
+    { quantity: 1 },
+    { quantity: 2 }
+  ], {
+    get(target, property, receiver) {
+      if (property === 'length') return 0
+      return Reflect.get(target, property, receiver)
+    }
+  })
+
+  assert.throws(
+    () => countOrderUnits(items),
+    /plain array/
+  )
+})
+
+test('rejects proxied order lines', () => {
+  const item = new Proxy({ quantity: 1 }, {})
+
+  assert.throws(
+    () => countOrderUnits([item]),
+    /must not be a proxy/
+  )
+})

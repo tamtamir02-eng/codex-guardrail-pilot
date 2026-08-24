@@ -1,6 +1,8 @@
+import { types as utilTypes } from 'node:util'
+
 export function countOrderUnits(items) {
-  if (!Array.isArray(items)) {
-    throw new TypeError('items must be an array')
+  if (!Array.isArray(items) || utilTypes.isProxy(items)) {
+    throw new TypeError('items must be a plain array')
   }
 
   let total = 0
@@ -24,6 +26,11 @@ export function countOrderUnits(items) {
 
   for (let index = 0; index < itemCount; index += 1) {
     const item = orderLines[index]
+
+    if (utilTypes.isProxy(item)) {
+      throw new TypeError(`items[${index}] must not be a proxy`)
+    }
+
     const quantityDescriptor = item == null
       ? undefined
       : Object.getOwnPropertyDescriptor(item, 'quantity')
