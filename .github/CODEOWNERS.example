@@ -1,0 +1,10 @@
+# Optional pilot template. Do not rename/enforce until the next approved stage.
+
+*                                      @YOUR-GITHUB-HANDLE
+/AGENTS.md                             @SECURITY-OWNER
+/RISK_POLICY.md                        @SECURITY-OWNER
+/.codex/rules/                         @SECURITY-OWNER
+/.github/workflows/                    @SECURITY-OWNER
+/.github/CODEOWNERS                    @SECURITY-OWNER
+/scripts/doctor.mjs                    @SECURITY-OWNER
+/auth/                                 @SECURITY-OWNER

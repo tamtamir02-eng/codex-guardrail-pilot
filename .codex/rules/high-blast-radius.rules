@@ -1,0 +1,122 @@
+# Guardrail V4: project-local commands that cross the sandbox boundary.
+# These rules supplement native sandbox/approvals; they are not a merge gate.
+
+prefix_rule(
+    pattern = [["git", "git.exe"], "reset", "--hard"],
+    decision = "forbidden",
+    justification = "Hard reset can destroy uncommitted work. Inspect status/diff and use a targeted restore.",
+    match = ["git reset --hard", "git reset --hard HEAD~1", "git.exe reset --hard"],
+    not_match = ["git reset --soft HEAD~1", "git -C repo reset --hard"],
+)
+
+prefix_rule(
+    pattern = [["git", "git.exe"], "push", ["--force", "-f"]],
+    decision = "forbidden",
+    justification = "Unqualified force push can overwrite shared history.",
+    match = ["git push --force", "git push -f origin main", "git.exe push --force"],
+    not_match = ["git push", "git push --force-with-lease"],
+)
+
+prefix_rule(
+    pattern = [["git", "git.exe"], "push", "--force-with-lease"],
+    decision = "prompt",
+    justification = "A guarded history rewrite still requires explicit human approval.",
+    match = ["git push --force-with-lease", "git.exe push --force-with-lease origin feature"],
+    not_match = ["git push", "git push --force"],
+)
+
+prefix_rule(
+    pattern = ["terraform", "destroy"],
+    decision = "prompt",
+    justification = "Infrastructure destruction requires explicit human approval.",
+    match = ["terraform destroy", "terraform destroy -auto-approve"],
+    not_match = ["terraform plan", "terraform apply"],
+)
+
+prefix_rule(
+    pattern = ["kubectl", "delete", ["namespace", "namespaces", "ns"]],
+    decision = "prompt",
+    justification = "Namespace deletion has a large blast radius.",
+    match = ["kubectl delete namespace production", "kubectl delete ns staging"],
+    not_match = ["kubectl get namespace", "kubectl delete pod example"],
+)
+
+prefix_rule(
+    pattern = [["npm", "pnpm"], "publish"],
+    decision = "prompt",
+    justification = "Package publication is an external release action.",
+    match = ["npm publish", "pnpm publish --access public"],
+    not_match = ["npm test", "pnpm run build"],
+)
+
+prefix_rule(
+    pattern = ["yarn", "npm", "publish"],
+    decision = "prompt",
+    justification = "Package publication is an external release action.",
+    match = ["yarn npm publish"],
+    not_match = ["yarn test"],
+)
+
+prefix_rule(
+    pattern = ["cargo", "publish"],
+    decision = "prompt",
+    justification = "Package publication is an external release action.",
+    match = ["cargo publish"],
+    not_match = ["cargo test"],
+)
+
+prefix_rule(
+    pattern = ["dotnet", "nuget", "push"],
+    decision = "prompt",
+    justification = "Package publication is an external release action.",
+    match = ["dotnet nuget push package.nupkg"],
+    not_match = ["dotnet test"],
+)
+
+prefix_rule(
+    pattern = ["twine", "upload"],
+    decision = "prompt",
+    justification = "Package publication is an external release action.",
+    match = ["twine upload dist/*"],
+    not_match = ["twine check dist/*"],
+)
+
+prefix_rule(
+    pattern = ["gh", "release", "create"],
+    decision = "prompt",
+    justification = "Creating a shared release requires explicit human approval.",
+    match = ["gh release create v4.0.0"],
+    not_match = ["gh release view v4.0.0"],
+)
+
+prefix_rule(
+    pattern = ["dropdb", "--force"],
+    decision = "prompt",
+    justification = "Forced database deletion requires human approval.",
+    match = ["dropdb --force app"],
+    not_match = ["dropdb --help"],
+)
+
+prefix_rule(
+    pattern = ["prisma", "migrate", "reset"],
+    decision = "prompt",
+    justification = "Database reset requires human approval.",
+    match = ["prisma migrate reset"],
+    not_match = ["prisma migrate status"],
+)
+
+prefix_rule(
+    pattern = ["fly", "deploy"],
+    decision = "prompt",
+    justification = "A deployment with potentially production scope requires explicit human approval.",
+    match = ["fly deploy"],
+    not_match = ["fly status"],
+)
+
+prefix_rule(
+    pattern = ["vercel", "--prod"],
+    decision = "prompt",
+    justification = "A production deployment requires explicit human approval.",
+    match = ["vercel --prod"],
+    not_match = ["vercel dev"],
+)

@@ -1,0 +1,17 @@
+{
+  "name": "codex-guardrail-pilot",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Isolated test application for Autonomous Development Guardrail V4",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "lint": "node scripts/lint.mjs",
+    "test": "node --test",
+    "build": "node scripts/build.mjs",
+    "doctor": "node scripts/doctor.mjs"
+  },
+  "license": "UNLICENSED"
+}
