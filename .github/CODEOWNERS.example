@@ -8,3 +8,8 @@
 /.github/CODEOWNERS                    @SECURITY-OWNER
 /scripts/doctor.mjs                    @SECURITY-OWNER
 /auth/                                 @SECURITY-OWNER
+/security/                             @SECURITY-OWNER
+/payments/                             @SECURITY-OWNER
+/database/                             @SECURITY-OWNER
+/migrations/                           @SECURITY-OWNER
+/infrastructure/                       @SECURITY-OWNER
