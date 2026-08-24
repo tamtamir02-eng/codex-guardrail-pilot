@@ -89,3 +89,18 @@ test('validates every slot before invoking quantity accessors', () => {
     /items\[1\] must be present/
   )
 })
+
+test('rejects indexed getters before they can replace later entries', () => {
+  const items = [{ quantity: 1 }, { quantity: 2 }]
+  Object.defineProperty(items, 0, {
+    get() {
+      delete items[1]
+      return { quantity: 1 }
+    }
+  })
+
+  assert.throws(
+    () => countOrderUnits(items),
+    /items\[0\] must be a data property/
+  )
+})

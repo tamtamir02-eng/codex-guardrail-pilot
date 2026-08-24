@@ -5,17 +5,21 @@ export function countOrderUnits(items) {
 
   let total = 0
   const itemCount = items.length
-
-  for (let index = 0; index < itemCount; index += 1) {
-    if (!Object.hasOwn(items, index)) {
-      throw new TypeError(`items[${index}] must be present`)
-    }
-  }
-
+  const itemDescriptors = Object.getOwnPropertyDescriptors(items)
   const orderLines = []
 
   for (let index = 0; index < itemCount; index += 1) {
-    orderLines.push(items[index])
+    const descriptor = itemDescriptors[index]
+
+    if (!descriptor) {
+      throw new TypeError(`items[${index}] must be present`)
+    }
+
+    if (!Object.hasOwn(descriptor, 'value')) {
+      throw new TypeError(`items[${index}] must be a data property`)
+    }
+
+    orderLines.push(descriptor.value)
   }
 
   for (let index = 0; index < itemCount; index += 1) {
