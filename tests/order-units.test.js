@@ -28,6 +28,16 @@ test('rejects sparse order arrays', () => {
   )
 })
 
+test('rejects inherited items in sparse arrays', () => {
+  const items = Array(1)
+  Object.setPrototypeOf(items, { 0: { quantity: 7 } })
+
+  assert.throws(
+    () => countOrderUnits(items),
+    /must be present/
+  )
+})
+
 test('rejects totals outside the safe integer range', () => {
   assert.throws(
     () => countOrderUnits([

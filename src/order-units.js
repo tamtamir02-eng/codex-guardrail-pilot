@@ -6,7 +6,7 @@ export function countOrderUnits(items) {
   let total = 0
 
   for (let index = 0; index < items.length; index += 1) {
-    if (!(index in items)) {
+    if (!Object.hasOwn(items, index)) {
       throw new TypeError(`items[${index}] must be present`)
     }
 
