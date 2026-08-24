@@ -48,20 +48,20 @@ test('rejects totals outside the safe integer range', () => {
   )
 })
 
-test('reads each quantity only once', () => {
-  let reads = 0
+test('rejects quantity getters', () => {
   const item = {
     get quantity() {
-      reads += 1
-      return reads === 1 ? 1 : Number.MAX_VALUE
+      return 1
     }
   }
 
-  assert.equal(countOrderUnits([item]), 1)
-  assert.equal(reads, 1)
+  assert.throws(
+    () => countOrderUnits([item]),
+    /own data property/
+  )
 })
 
-test('validates the original number of order lines', () => {
+test('rejects quantity getters that mutate the original array', () => {
   const items = [{}, { quantity: 2 }]
   Object.defineProperty(items[0], 'quantity', {
     get() {
@@ -70,7 +70,10 @@ test('validates the original number of order lines', () => {
     }
   })
 
-  assert.equal(countOrderUnits(items), 3)
+  assert.throws(
+    () => countOrderUnits(items),
+    /own data property/
+  )
 })
 
 test('validates every slot before invoking quantity accessors', () => {
@@ -118,5 +121,21 @@ test('rejects inherited descriptors after prototype pollution', () => {
     )
   } finally {
     delete Object.prototype[0]
+  }
+})
+
+test('rejects inherited quantities after prototype pollution', () => {
+  Object.defineProperty(Object.prototype, 'quantity', {
+    configurable: true,
+    value: 7
+  })
+
+  try {
+    assert.throws(
+      () => countOrderUnits([{}]),
+      /own data property/
+    )
+  } finally {
+    delete Object.prototype.quantity
   }
 })

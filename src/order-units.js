@@ -24,7 +24,15 @@ export function countOrderUnits(items) {
 
   for (let index = 0; index < itemCount; index += 1) {
     const item = orderLines[index]
-    const quantity = item?.quantity
+    const quantityDescriptor = item == null
+      ? undefined
+      : Object.getOwnPropertyDescriptor(item, 'quantity')
+
+    if (!quantityDescriptor || !Object.hasOwn(quantityDescriptor, 'value')) {
+      throw new TypeError(`items[${index}].quantity must be an own data property`)
+    }
+
+    const quantity = quantityDescriptor.value
 
     if (!Number.isSafeInteger(quantity) || quantity <= 0) {
       throw new TypeError(`items[${index}].quantity must be a positive integer`)
