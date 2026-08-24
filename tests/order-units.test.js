@@ -60,3 +60,18 @@ test('reads each quantity only once', () => {
   assert.equal(countOrderUnits([item]), 1)
   assert.equal(reads, 1)
 })
+
+test('validates the original number of order lines', () => {
+  const items = [{}, { quantity: 2 }]
+  Object.defineProperty(items[0], 'quantity', {
+    get() {
+      items.length = 1
+      return 1
+    }
+  })
+
+  assert.throws(
+    () => countOrderUnits(items),
+    /items\[1\] must be present/
+  )
+})
