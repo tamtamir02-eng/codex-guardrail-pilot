@@ -1,7 +1,16 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
 
-import { calculateOrderTotal } from '../src/order-total.js'
+import { calculateOrderSubtotal, calculateOrderTotal } from '../src/order-total.js'
+
+test('calculates an order subtotal without tax', () => {
+  const subtotal = calculateOrderSubtotal([
+    { quantity: 2, unitPrice: 10 },
+    { quantity: 1, unitPrice: 5.5 }
+  ])
+
+  assert.equal(subtotal, 25.5)
+})
 
 test('calculates a total with tax', () => {
   const total = calculateOrderTotal([

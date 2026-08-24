@@ -1,1 +1,1 @@
-export { calculateOrderTotal } from './order-total.js'
+export { calculateOrderSubtotal, calculateOrderTotal } from './order-total.js'
