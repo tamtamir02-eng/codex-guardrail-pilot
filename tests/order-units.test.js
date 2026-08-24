@@ -47,3 +47,16 @@ test('rejects totals outside the safe integer range', () => {
     /safe integer range/
   )
 })
+
+test('reads each quantity only once', () => {
+  let reads = 0
+  const item = {
+    get quantity() {
+      reads += 1
+      return reads === 1 ? 1 : Number.MAX_VALUE
+    }
+  }
+
+  assert.equal(countOrderUnits([item]), 1)
+  assert.equal(reads, 1)
+})

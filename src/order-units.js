@@ -11,16 +11,17 @@ export function countOrderUnits(items) {
     }
 
     const item = items[index]
+    const quantity = item?.quantity
 
-    if (!item || !Number.isSafeInteger(item.quantity) || item.quantity <= 0) {
+    if (!Number.isSafeInteger(quantity) || quantity <= 0) {
       throw new TypeError(`items[${index}].quantity must be a positive integer`)
     }
 
-    if (!Number.isSafeInteger(total + item.quantity)) {
+    if (!Number.isSafeInteger(total + quantity)) {
       throw new RangeError('total quantity exceeds the safe integer range')
     }
 
-    total += item.quantity
+    total += quantity
   }
 
   return total
