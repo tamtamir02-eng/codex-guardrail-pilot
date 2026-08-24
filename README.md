@@ -27,4 +27,4 @@ npm run doctor
 - Optional CODEOWNERS example and pull-request template.
 - No lifecycle hooks, custom agents, fingerprints, receipts, attestations, reviewers, or installer.
 
-The repository is only the setup environment. Pilot Tests A–G, branch protection, rulesets, required checks, CODEOWNERS enforcement, automatic Codex review, and Codex Security remain intentionally disabled until explicit approval.
+The repository is only the setup environment. Pilot Tests A–G have not started. Branch protection, rulesets, required checks, CODEOWNERS enforcement, automatic Codex review, and Codex Security are not enabled unless a later documented phase explicitly confirms them.
