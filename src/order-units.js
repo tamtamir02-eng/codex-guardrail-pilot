@@ -10,8 +10,16 @@ export function countOrderUnits(items) {
     if (!Object.hasOwn(items, index)) {
       throw new TypeError(`items[${index}] must be present`)
     }
+  }
 
-    const item = items[index]
+  const orderLines = []
+
+  for (let index = 0; index < itemCount; index += 1) {
+    orderLines.push(items[index])
+  }
+
+  for (let index = 0; index < itemCount; index += 1) {
+    const item = orderLines[index]
     const quantity = item?.quantity
 
     if (!Number.isSafeInteger(quantity) || quantity <= 0) {

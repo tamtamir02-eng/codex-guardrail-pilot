@@ -70,6 +70,20 @@ test('validates the original number of order lines', () => {
     }
   })
 
+  assert.equal(countOrderUnits(items), 3)
+})
+
+test('validates every slot before invoking quantity accessors', () => {
+  const items = [
+    {
+      get quantity() {
+        items[1] = { quantity: 2 }
+        return 1
+      }
+    },
+    ,
+  ]
+
   assert.throws(
     () => countOrderUnits(items),
     /items\[1\] must be present/
