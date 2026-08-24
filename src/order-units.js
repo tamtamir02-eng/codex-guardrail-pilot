@@ -9,11 +9,11 @@ export function countOrderUnits(items) {
   const orderLines = []
 
   for (let index = 0; index < itemCount; index += 1) {
-    const descriptor = itemDescriptors[index]
-
-    if (!descriptor) {
+    if (!Object.hasOwn(itemDescriptors, index)) {
       throw new TypeError(`items[${index}] must be present`)
     }
+
+    const descriptor = itemDescriptors[index]
 
     if (!Object.hasOwn(descriptor, 'value')) {
       throw new TypeError(`items[${index}] must be a data property`)

@@ -104,3 +104,19 @@ test('rejects indexed getters before they can replace later entries', () => {
     /items\[0\] must be a data property/
   )
 })
+
+test('rejects inherited descriptors after prototype pollution', () => {
+  Object.defineProperty(Object.prototype, '0', {
+    configurable: true,
+    value: { value: { quantity: 7 } }
+  })
+
+  try {
+    assert.throws(
+      () => countOrderUnits(Array(1)),
+      /items\[0\] must be present/
+    )
+  } finally {
+    delete Object.prototype[0]
+  }
+})
