@@ -12,6 +12,10 @@ test('calculates an order subtotal without tax', () => {
   assert.equal(subtotal, 25.5)
 })
 
+test('returns a zero subtotal for an empty order', () => {
+  assert.equal(calculateOrderSubtotal([]), 0)
+})
+
 test('calculates a total with tax', () => {
   const total = calculateOrderTotal([
     { quantity: 2, unitPrice: 10 },
