@@ -20,7 +20,7 @@ Reason for classification:
 ## Review gates
 
 - [ ] Current PR HEAD checks are passing.
-- [ ] Codex native PR review requested when required.
+- [ ] Codex advisory PR review requested, or `HUMAN REVIEW REQUIRED` recorded after timeout.
 - [ ] Human approval requested.
 - [ ] RED only: CODEOWNER/security expert requested.
 - [ ] RED only: Codex Security requested, or unavailable fallback documented.

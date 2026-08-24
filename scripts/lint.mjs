@@ -1,6 +1,8 @@
 import { readFileSync, readdirSync } from 'node:fs'
 import { extname, join } from 'node:path'
 
+import { inspectWhitespace } from './whitespace-policy.mjs'
+
 const roots = ['src', 'auth', 'tests', 'scripts']
 const extensions = new Set(['.js', '.mjs'])
 const files = []
@@ -18,11 +20,7 @@ for (const root of roots) collect(root)
 const failures = []
 for (const file of files.sort()) {
   const text = readFileSync(file, 'utf8')
-  if (text.includes('\t')) failures.push(`${file}: tab character`)
-  if (!text.endsWith('\n')) failures.push(`${file}: missing final newline`)
-  text.split('\n').forEach((line, index) => {
-    if (/\s+$/.test(line)) failures.push(`${file}:${index + 1}: trailing whitespace`)
-  })
+  failures.push(...inspectWhitespace(text, file))
 }
 
 if (failures.length) {

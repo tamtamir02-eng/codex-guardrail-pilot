@@ -9,12 +9,14 @@ The application calculates order totals and contains an isolated `auth/` policy 
 ```powershell
 npm run lint
 npm test
+npm run test:regression
 npm run build
 npm run doctor
 ```
 
 - `lint` checks repository JavaScript style using Node only.
 - `test` uses the native `node:test` runner.
+- `test:regression` covers the RED path gate and LF/CRLF whitespace behavior.
 - `build` performs syntax and package-contract validation; no artifact is published.
 - `doctor` verifies the embedded V4 repository contract and forbidden-component absence.
 
@@ -24,6 +26,7 @@ npm run doctor
 - GREEN/YELLOW/RED risk policy.
 - Project-local Codex Rules for high-blast-radius commands.
 - PR workflow bound to the current pull-request HEAD SHA.
+- Failure-closed `guardrail-policy` job for configured RED paths.
 - Optional CODEOWNERS example and pull-request template.
 - No lifecycle hooks, custom agents, fingerprints, receipts, attestations, reviewers, or installer.
 

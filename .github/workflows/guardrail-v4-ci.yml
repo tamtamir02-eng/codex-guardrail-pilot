@@ -44,3 +44,29 @@ jobs:
       - name: Guardrail doctor
         if: ${{ always() }}
         run: npm run doctor
+
+  guardrail-policy:
+    name: guardrail-policy
+    if: ${{ github.event_name == 'pull_request' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out the exact PR HEAD and base history
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Bind policy evaluation to the PR HEAD
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+          echo "Policy commit: $EXPECTED_SHA"
+
+      - name: Enforce repository risk policy
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: node scripts/guardrail-policy.mjs "$BASE_SHA" "$HEAD_SHA"

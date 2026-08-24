@@ -10,6 +10,7 @@
   "scripts": {
     "lint": "node scripts/lint.mjs",
     "test": "node --test",
+    "test:regression": "node --test tests/guardrail-policy.test.js tests/whitespace-policy.test.js",
     "build": "node scripts/build.mjs",
     "doctor": "node scripts/doctor.mjs"
   },
