@@ -8,7 +8,7 @@ export function countOrderUnits(items) {
   let total = 0
   const itemCount = items.length
   const itemDescriptors = Object.getOwnPropertyDescriptors(items)
-  const orderLines = []
+  const orderLines = Object.create(null)
 
   for (let index = 0; index < itemCount; index += 1) {
     if (!Object.hasOwn(itemDescriptors, index)) {
@@ -21,7 +21,7 @@ export function countOrderUnits(items) {
       throw new TypeError(`items[${index}] must be a data property`)
     }
 
-    orderLines.push(descriptor.value)
+    orderLines[index] = descriptor.value
   }
 
   for (let index = 0; index < itemCount; index += 1) {

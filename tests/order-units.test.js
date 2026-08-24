@@ -165,3 +165,23 @@ test('rejects proxied order lines', () => {
     /must not be a proxy/
   )
 })
+
+test('stores snapshots without inherited array setters', () => {
+  let result
+
+  Object.defineProperty(Array.prototype, '0', {
+    configurable: true,
+    get() {
+      return { quantity: 7 }
+    },
+    set() {}
+  })
+
+  try {
+    result = countOrderUnits([{ quantity: 1 }])
+  } finally {
+    delete Array.prototype[0]
+  }
+
+  assert.equal(result, 1)
+})
