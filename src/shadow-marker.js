@@ -3,5 +3,5 @@ export function formatShadowMarker(value) {
     throw new TypeError('value must be a non-empty string')
   }
 
-  return `shadow:${value.trim()}`
+  return `shadow:${value.trim().toLowerCase()}`
 }

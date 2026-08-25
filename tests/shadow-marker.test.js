@@ -4,7 +4,7 @@ import test from 'node:test'
 import { formatShadowMarker } from '../src/shadow-marker.js'
 
 test('formats a normalized shadow marker', () => {
-  assert.equal(formatShadowMarker('  yellow  '), 'shadow:yellow')
+  assert.equal(formatShadowMarker('  YELLOW  '), 'shadow:yellow')
 })
 
 test('rejects an empty marker', () => {
