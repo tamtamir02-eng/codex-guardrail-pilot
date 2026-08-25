@@ -12,7 +12,7 @@ const requiredFiles = [
   'README.md',
   'auth/access-policy.js',
   'package.json',
-  'src/order-total.js',
+  'auth/order-total.js',
   'tests/access-policy.test.js',
   'tests/order-total.test.js'
 ]
