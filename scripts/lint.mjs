@@ -1,4 +1,4 @@
-import { readFileSync, readdirSync } from 'node:fs'
+import { existsSync, readFileSync, readdirSync } from 'node:fs'
 import { extname, join } from 'node:path'
 
 const roots = ['src', 'auth', 'tests', 'scripts']
@@ -13,7 +13,9 @@ function collect(directory) {
   }
 }
 
-for (const root of roots) collect(root)
+for (const root of roots) {
+  if (existsSync(root)) collect(root)
+}
 
 const failures = []
 for (const file of files.sort()) {
