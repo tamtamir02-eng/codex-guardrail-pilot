@@ -27,3 +27,5 @@
 | Security fallback אנושי | לא | לפי שיקול | חובה אם Security לא זמין/לא הושלם |
 
 Label, checkbox, comment או קובץ שנוצרו על ידי ה־PR אינם proof. GitHub status checks, review records וה־commit SHA הם מקורות המצב. push חדש יוצר SHA חדש וחייב להפעיל מחדש CI ולבטל review ישן בהתאם ל־ruleset.
+
+<!-- V4.2 live-shadow fixture: target policy changes must remain CONTROL_PLANE. -->
