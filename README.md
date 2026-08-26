@@ -6,6 +6,8 @@ The application calculates order totals and contains an isolated `auth/` policy 
 
 ## Local validation
 
+Run the validation commands from the repository root so every script resolves the same project files.
+
 ```powershell
 npm run lint
 npm test
