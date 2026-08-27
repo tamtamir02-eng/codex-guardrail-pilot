@@ -12,3 +12,9 @@ test('admin can manage while unknown roles are denied', () => {
   assert.equal(canAccess('admin', 'manage'), true)
   assert.equal(canAccess('unknown', 'read'), false)
 })
+
+test('synthetic pilot reviewer can inspect but cannot modify', () => {
+  assert.equal(canAccess('pilot-reviewer', 'inspect'), true)
+  assert.equal(canAccess('pilot-reviewer', 'write'), false)
+  assert.equal(canAccess('pilot-reviewer', 'manage'), false)
+})
