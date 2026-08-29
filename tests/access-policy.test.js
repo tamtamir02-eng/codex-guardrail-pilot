@@ -12,3 +12,8 @@ test('admin can manage while unknown roles are denied', () => {
   assert.equal(canAccess('admin', 'manage'), true)
   assert.equal(canAccess('unknown', 'read'), false)
 })
+
+test('auditor can audit without write access', () => {
+  assert.equal(canAccess('auditor', 'audit'), true)
+  assert.equal(canAccess('auditor', 'write'), false)
+})

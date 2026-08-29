@@ -17,11 +17,11 @@ for (const root of roots) collect(root)
 
 const failures = []
 for (const file of files.sort()) {
-  const text = readFileSync(file, 'utf8')
+  const text = readFileSync(file, 'utf8').replaceAll('\r\n', '\n')
   if (text.includes('\t')) failures.push(`${file}: tab character`)
   if (!text.endsWith('\n')) failures.push(`${file}: missing final newline`)
   text.split('\n').forEach((line, index) => {
-    if (/\s+$/.test(line)) failures.push(`${file}:${index + 1}: trailing whitespace`)
+    if (/[ \t]+$/.test(line)) failures.push(`${file}:${index + 1}: trailing whitespace`)
   })
 }
 
