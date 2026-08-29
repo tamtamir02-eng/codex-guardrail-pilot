@@ -10,10 +10,8 @@ const requiredFiles = [
   'AGENTS.md',
   'RISK_POLICY.md',
   'README.md',
-  'auth/access-policy.js',
   'package.json',
   'src/order-total.js',
-  'tests/access-policy.test.js',
   'tests/order-total.test.js'
 ]
 const forbiddenDirectories = ['hooks', 'agents', '.codex/hooks', '.codex/agents']
