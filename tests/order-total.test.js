@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
 
-import { calculateOrderTotal } from '../src/order-total.js'
+import { calculateOrderTotal } from '../auth/order-total.js'
 
 test('calculates a total with tax', () => {
   const total = calculateOrderTotal([
