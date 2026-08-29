@@ -22,6 +22,8 @@ The legacy V4.1 `guardrail-policy` job is no longer required and is not present 
 
 ## Local validation
 
+Run the validation commands from the repository root so every script resolves the same project files.
+
 ```powershell
 npm run lint
 npm test
