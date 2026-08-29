@@ -14,6 +14,14 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  same-name-shadow-fixture:
+    name: guardrail-v4.2
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Create an untrusted same-name check fixture
+        run: echo "This GitHub Actions check must not satisfy the GitHub App identity gate."
+
   validate:
     name: validate
     runs-on: ubuntu-latest
