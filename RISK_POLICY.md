@@ -15,6 +15,8 @@
 - שינוי documentation קוסמטי בלבד הוא GREEN.
 - שינוי ב־`.github/`, `.codex/rules/`, `AGENTS.md`, policy, tests או doctor הוא לפחות YELLOW; החלשת gate היא RED.
 
+פקודות validation של ה־Pilot מורצות משורש ה־repository, כדי ש־lint, tests, build ו־doctor יבדקו את אותו HEAD ואת אותם נתיבים שנשלחים ל־GitHub.
+
 ## Gates שאינם ניתנים להחלפה בהצהרה
 
 | Gate | GREEN | YELLOW | RED |
