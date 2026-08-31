@@ -4,11 +4,15 @@ function requireFiniteNonNegative(value, label) {
   }
 }
 
-export function calculateOrderTotal(items, taxRate = 0) {
+export function calculateOrderTotal(items, taxRate = 0, discountRate = 0) {
   if (!Array.isArray(items)) {
     throw new TypeError('items must be an array')
   }
   requireFiniteNonNegative(taxRate, 'taxRate')
+  requireFiniteNonNegative(discountRate, 'discountRate')
+  if (discountRate > 1) {
+    throw new TypeError('discountRate must not exceed 1')
+  }
 
   const subtotal = items.reduce((sum, item, index) => {
     if (!item || !Number.isInteger(item.quantity) || item.quantity <= 0) {
@@ -18,5 +22,5 @@ export function calculateOrderTotal(items, taxRate = 0) {
     return sum + item.quantity * item.unitPrice
   }, 0)
 
-  return Number((subtotal * (1 + taxRate)).toFixed(2))
+  return Number((subtotal * (1 - discountRate) * (1 + taxRate)).toFixed(2))
 }
